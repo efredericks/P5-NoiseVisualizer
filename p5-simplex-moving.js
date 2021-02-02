@@ -41,7 +41,9 @@ function writeArray() {
   lockedFrameCount = frameCount;
   select("#output").html("");
 
-  let output = "map = [<br>";
+  let output = "octaves = " + octaveSlider.value() + ";<br>";
+  output += "frequency = " + freqSlider.value() + ";<br>";
+  output += "map = [<br>";
   for (let x = lockedFrameCount; x < lockedFrameCount + WIDTH; x++) {
     output += "  [";
     for (let y = lockedFrameCount; y < lockedFrameCount + HEIGHT; y++) {
