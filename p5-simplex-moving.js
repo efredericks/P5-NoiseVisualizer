@@ -39,6 +39,7 @@ function updateSimplex() {
 
 function writeArray() {
   lockedFrameCount = frameCount;
+  select("#output").html("");
 
   let output = "map = [<br>";
   for (let x = lockedFrameCount; x < lockedFrameCount + WIDTH; x++) {
