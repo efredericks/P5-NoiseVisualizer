@@ -3,6 +3,8 @@
 //let simplex = new SimplexNoise();
 let WIDTH = 400;//600;
 let HEIGHT = 200;//400;
+let C_WIDTH = 800;
+let C_HEIGHT = 200;
 let map = new Array(HEIGHT);
 
 let grass = null;
@@ -36,13 +38,15 @@ function updateSimplex() {
 function setup() {
   noiseGen = new FastSimplexNoise({ frequency: 0.01, octaves: 4 });
 
-  createCanvas(WIDTH, HEIGHT);
+  createCanvas(C_WIDTH, C_HEIGHT);
+  background(color("#eeeeee"));
+
 
   // sliders
   octaveSlider = createSlider(0, 20, 4, 1);
-  octaveSlider.position(20, 30);
+  octaveSlider.position(WIDTH+20, 30);
   freqSlider   = createSlider(0.01, 0.2, 0.01, 0.01);
-  freqSlider.position(20, 50);
+  freqSlider.position(WIDTH+20, 50);
 
   octaveSlider.mouseReleased(updateSimplex);
   freqSlider.mouseReleased(updateSimplex);
@@ -123,6 +127,7 @@ function draw() {
 
   const o = octaveSlider.value();
   const f = freqSlider.value();
-  text('octaves', octaveSlider.x * 2 + octaveSlider.width, 35);
-  text('frequency', freqSlider.x * 2 + freqSlider.width, 65);
+  text('octaves', WIDTH + 20 + octaveSlider.width, 35);
+  //text('frequency', freqSlider.x * 2 + freqSlider.width, 65);
+  text('frequency', WIDTH + 20 + freqSlider.width, 58);
 }
