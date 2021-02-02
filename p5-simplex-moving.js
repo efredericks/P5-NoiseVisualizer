@@ -21,6 +21,8 @@ let octaveSlider;
 let freqSlider;
 let noiseGen;
 
+let lockedFrameCount;
+
 
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -33,6 +35,25 @@ function getRandomArbitrary(min, max) {
 
 function updateSimplex() {
   noiseGen = new FastSimplexNoise({ frequency: freqSlider.value(), octaves: octaveSlider.value() });
+}
+
+function writeArray() {
+  lockedFrameCount = frameCount;
+
+  let output = "map = [<br>";
+  for (let x = lockedFrameCount; x < lockedFrameCount + WIDTH; x++) {
+    output += "  [";
+    for (let y = lockedFrameCount; y < lockedFrameCount + HEIGHT; y++) {
+      if (y >= (lockedFrameCount + HEIGHT - 1))
+        output += noiseGen.get2DNoise(x+offset[0], y+offset[1]);
+      else
+        output += noiseGen.get2DNoise(x+offset[0], y+offset[1]) + ", ";
+    }
+    output += "  ],<br>";
+  }
+  output += "];"
+
+  select("#output").html(output);
 }
 
 function setup() {
@@ -48,11 +69,15 @@ function setup() {
   freqSlider   = createSlider(0.01, 0.2, 0.01, 0.01);
   freqSlider.position(WIDTH+20, 50);
 
+  // buttons
+  button = createButton('write array');
+  button.position(WIDTH+20, 70);
+
   octaveSlider.mouseReleased(updateSimplex);
   freqSlider.mouseReleased(updateSimplex);
+  button.mousePressed(writeArray);
 
   textSize(15);
-
 
   grass = color(0, 153, 76);
   water = color(51, 153, 255);
